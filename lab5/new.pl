@@ -16,7 +16,7 @@ sub uudecode {
 		@line = split(' ',$line);
  		if ( $line[0] eq begin ) {
 			$decode = 1;
-			open (OUT, ">$line1[2]");
+			open (OUT, ">$line[2]");
 		} elsif ( $line eq "`$EOL") { 
 			$decode = 0;
 			close(OUT);
