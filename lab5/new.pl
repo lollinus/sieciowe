@@ -2,28 +2,25 @@
 use Socket;
 my $EOL = "\015\012";
 
-
-my $EOL = "\015\012";
-
 sub uudecode {
 	$filein = shift;
 	open(IN,"<$filein") or die "problem z otwarciem pliku wejsciowego $wejscie\n";
 	print "$filein\n";
-	print "$fileout\n";
+	print "sprawdzanie za³±czników kodowanych UU\n";
 	@file=<IN>;
 	
 	$decode = 0;
 	
   LINE: foreach $line (@file) {
 
-		@line1 = split(' ',$line);
- 		if ( $line1[0] eq begin ) {
-			$started = 1;
+		@line = split(' ',$line);
+ 		if ( $line[0] eq begin ) {
+			$decode = 1;
 			open (OUT, ">$line1[2]");
 		} elsif ( $line eq "`$EOL") { 
-			$started = 0;
+			$decode = 0;
 			close(OUT);
-		} elsif ( $started == 1 ) {
+		} elsif ( $decode == 1 ) {
 			$len = unpack("c1", substr($line,0,1)) - 32;
 			$line = substr($line,1);
 			
@@ -164,12 +161,12 @@ sub get_messages {
 				$subject = $message;
 			}
 			print WY "$message";
-			uudecode($message)
 		}
 		close(WY);
 		print "czy usun±æ wiadomo¶æ $i? ";
 		print "$subject";
 		command $sock, "DELE $i" if <STDIN>=~ /^[Yy][Ee][Ss]$/;
+		uudecode("wiadomosc.$i");
 	}
 }
 
