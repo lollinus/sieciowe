@@ -25,23 +25,39 @@ foreach $linia (@plik) {
 		$suma{$nazwa} += $student[$i];
 		$ilosc{$nazwa}++;
     }
-    print "$nazwa ";
-    print "$suma{$nazwa} ";
-	print "$ilosc{$nazwa}\n";
-    print "$linia";
-    
+#    print "$nazwa ";
+#    print "$suma{$nazwa} ";
+#    print "$ilosc{$nazwa}\n";
+#    print "$linia";
     $srednia{$nazwa} = $suma{$nazwa} / $ilosc{$nazwa};
 
-format =
-@<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @#.##
-$nazwa,$srednia{$nazwa},
-.
+#format =
+#@<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @#.##
+#$nazwa,$srednia{$nazwa},
+#.
 #	write;
-print "\n";
+#print "\n";
 }
 
-#foreach $n (sortsrednia) {
-#     write;
-#    print "$n\t"
+format WY=
+@<<<<<<<<<<<<<<<<<<<<<<<<< @#.##
+$nazwa,$srednia{$nazwa},
+.
+
+# wy³uskanie wartosci hash'a za pomoc± funkcji each
+#while (($key,$val) = each %srednia) {
+#	print "$key , $val \n";
 #}
 
+# sortowanie po kluczach
+foreach $nazwa (sort { $b cmp $a } (keys %srednia)) {
+     write WY;
+}
+
+# sortowanie po warto¶iciach
+#foreach $nazwa (sort { $srednia{$b} <=> $srednia{$a} } (keys %srednia)) {
+#     write WY;
+#}
+
+close(WE);
+close(WY);
