@@ -25,20 +25,28 @@ while( ! $good ) {
     }
 }
 format =
-@<<<<<<<<<< @##### @<<<<<<<<<<<<<<<<<<<<
-$rights,$size,$file
+@<<<<<<<<<< @##### @<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<<<<<<<<<
+$rights,$size,$atime1,$file
 .
 
 foreach $file (@dir){
-    ($mode,$size)=(stat $file)[2,7];
+    ($mode,$size,$atime,$stime)=(lstat $kat.'/'.$file)[2,7,8,9];
 #	printf "%s %04o\n", $file, $mode & 07777;
 #	print "$file";
-	$rights = ($mode & 00400 ? "r" : "-").
+    $rights = (-d _ ? "d" : "");# -d  File is a directory.
+    $rights = (-l _ ? "l" : $rights);# -l  File is a symbolic link.
+    $rights = (-p _ ? "p" : $rights);# -p  File is a named pipe (FIFO), or Filehandle is a pipe.
+    $rights = (-S _ ? "S" : $rights);# -S  File is a socket.
+    $rights = (-b _ ? "b" : $rights);# -b  File is a block special file.
+    $rights = (-c _ ? "c" : $rights);# -c  File is a character special file.
+	$rights = (-f _ ? "-" : $rights);
+
+	$rights = $rights.($mode & 00400 ? "r" : "-").
 		($mode & 00200 ? "w" : "-").($mode & 00100 ? "x" : "-").
 		($mode & 00040 ? "r" : "-").($mode & 00020 ? "w" : "-").
 		($mode & 00010 ? "x" : "-").($mode & 00004 ? "r" : "-").
 		($mode & 00002 ? "w" : "-").($mode & 00001 ? "x" : "-");
-
+	$atime1 = gmtime($atime);
     write;
 }
 }
