@@ -12,7 +12,9 @@ if (@ARGV>1) {
 
 open(WE,"<$wejscie") or die "problem z otwarciem pliku wejsciowego $wejscie\n";
 open(WY,">$wyjscie") or die "problem z otwarciem pliku wyjsciowego $wyjscie\n";
-my %studenci;
+my %suma;
+my %ilosc;
+my %srednia;
 
 @plik=<WE>;
 my $linia;
@@ -20,23 +22,26 @@ foreach $linia (@plik) {
     @student=split(' ',$linia);
     $nazwa=$student[0]." ".$student[1];
     for ($i=2; $i<@student ; $i++) {
-	$studenci{$nazwa} += $student[$i];
+		$suma{$nazwa} += $student[$i];
+		$ilosc{$nazwa}++;
     }
-    print "$nazwa\n";
-    print "$studenci{$nazwa}\n";
-    print "@linia\n";
+    print "$nazwa ";
+    print "$suma{$nazwa} ";
+	print "$ilosc{$nazwa}\n";
+    print "$linia";
     
-#    $studenci{$nazwa} /= @linia;
+    $srednia{$nazwa} = $suma{$nazwa} / $ilosc{$nazwa};
 
 format =
 @<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @#.##
-$nazwa,$studenci{$nazwa}
+$nazwa,$srednia{$nazwa},
 .
-    write;
-    }
+#	write;
+print "\n";
+}
 
-#foreach $n (@studenci) {
-#     write WY;
-#    print "$n\t$
+#foreach $n (sortsrednia) {
+#     write;
+#    print "$n\t"
 #}
 
