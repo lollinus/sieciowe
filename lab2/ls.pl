@@ -25,12 +25,20 @@ while( ! $good ) {
     }
 }
 format =
-@<<<<<<<<<<<<<< @<<<<<<<<<<<<<< @<<<<<<<<<<<<<<
-$i,$n,$t
+@<<<<<<<<<< @##### @<<<<<<<<<<<<<<<<<<<<
+$rights,$size,$file
 .
 
-foreach $i (@dir){
-    ($n,$t)=(stat $i)[2,4];
+foreach $file (@dir){
+    ($mode,$size)=(stat $file)[2,7];
+#	printf "%s %04o\n", $file, $mode & 07777;
+#	print "$file";
+	$rights = ($mode & 00400 ? "r" : "-").
+		($mode & 00200 ? "w" : "-").($mode & 00100 ? "x" : "-").
+		($mode & 00040 ? "r" : "-").($mode & 00020 ? "w" : "-").
+		($mode & 00010 ? "x" : "-").($mode & 00004 ? "r" : "-").
+		($mode & 00002 ? "w" : "-").($mode & 00001 ? "x" : "-");
+
     write;
 }
 }
