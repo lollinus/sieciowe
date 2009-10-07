@@ -1,0 +1,69 @@
+#!/usr/bin/perl -w
+
+use mime;
+
+my $mess = "Date: Sun, 05 Jan 2003 21:30:30 +0100
+From: SW <swernikowski\@wi.ps.pl>
+To: swernikowski\@wi.ps.pl
+Subject: WIADOMOSC MIME
+MIME-Version: 1.0 (przyk³adowy komentarz przegl±darki)
+Content-Type: multipart/mixed;
+ boundary=\"------------060305090202000204090500\"
+
+This is a multi-part message in MIME format.
+--------------060305090202000204090500
+Content-Type: text/plain; charset=ISO-8859-2;
+Content-Transfer-Encoding: quoted-printable
+
+To jest przyk=B3ad wiadomo=B6ci zakodowanej wg. standardu MIME.
+Niewiele jest tu tre=B6ci a na pewno niewiele sensownej tre=B6ci.
+W ka=BFdym razie list ten sk=B3ada =BFyczenia wszelkiej pomy=B6lno=B6ci
+w Nowym Roku.
+
+--------------060305090202000204090500
+Content-Type: application/octet-stream;
+ name=\"Attach3.bin\"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment;
+ filename=\"Attach3.bin\"
+
+AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8gISIjJCUmJygpKissLS4vMDEyMzQ1
+Njc4OTo7PD0+Pw==
+--------------060305090202000204090500
+Content-Type: application/octet-stream;
+ name=\"Attach2.bin\"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment;
+ filename=\"Attach2.bin\"
+
+AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8gISIjJCUmJygpKissLS4vMDEyMzQ1
+Njc4OTo7PD0+P0BBQkNERUZHSElKS0xNTk9QUVJTVFVWV1hZWltcXV5fYGFiY2RlZmdoaWpr
+bG1ub3BxcnN0dXZ3eHl6e3x9fn8=
+--------------060305090202000204090500
+Content-Type: application/octet-stream;
+ name=\"Attach1.bin\"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment;
+ filename=\"Attach1.bin\"
+
+AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8gISIjJCUmJygpKissLS4vMDEyMzQ1
+Njc4OTo7PD0+P0BBQkNERUZHSElKS0xNTk9QUVJTVFVWV1hZWltcXV5fYGFiY2RlZmdoaWpr
+bG1ub3BxcnN0dXZ3eHl6e3x9fn+AgYKDhIWGh4iJiouMjY6PkJGSk5SVlpeYmZqbnJ2en6Ch
+oqOkpaanqKmqq6ytrq+wsbKztLW2t7i5uru8vb6/wMHCw8TFxsfIycrLzM3Oz9DR0tPU1dbX
+2Nna29zd3t/g4eLj5OXm5+jp6uvs7e7v8PHy8/T19vf4+fr7/P3+/w==
+--------------060305090202000204090500--
+
+";
+
+print encode_quoted_printable("\n\t\n³±¶æ¼¿êøàþabcdefg=ss \n \n");
+@messages = MIME_decode($mess);
+
+while ( @messages ) {
+	$fileout = shift @messages;
+	$message = shift @messages;
+	open(OUT,">$fileout") or die "problem z plikiem $fileout";
+	syswrite(OUT,$message);
+	close(OUT);
+}
+
+MIME_encode();

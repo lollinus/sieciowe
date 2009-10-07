@@ -1,0 +1,35 @@
+Dynamic data flow analysis involves real-time analysis of the flow of
+data through the processor to determine data and register dependencies
+and to detect opportunities for out-of-order instruction execution. The
+out-of-order execution core can simultaneously monitor many instructions
+and execute these instructions in the order that optimizes the use of
+the processor's multiple execution units, while maintaining the data
+integrity. This out-of-order execution keeps the execution units busy
+even when cache misses and data dependencies among instructions occur.
+Speculative execution refers to the processor's ability to execute
+instructions that lie beyond a conditional branch that has not yet been
+resolved, and ultimately to commit the results in the order of the
+original instruction stream. To make speculative execution possible, the
+P6 processor micro-architecture decouples the dispatch and execution of
+instructions from the commitment of results. The processor's
+out-of-order execution core uses data-flow analysis to execute all
+available instructions in the instruction pool and store the results in
+temporary registers.  The retirement unit then linearly searches the
+instruction pool for completed instructions that no longer have data
+dependencies with other instructions or unresolved branch predictions.
+When completed instructions are found, the retirement unit commits the
+results of these instructions to memory and/or the IA-32 registers (the
+processor's eight general-purpose registers and eight x87 FPU data
+registers) in the order they were originally issued and retires the
+instructions from the instruction pool.  Combining branch prediction,
+dynamic data-flow analysis and speculative execution, the dynamic
+execution capability of the P6 micro-architecture removes the constraint
+of linear instruction sequencing between the traditional fetch and
+execute phases of instruction execution.  Thus, the processor can
+continue to decode instructions even when there are multiple levels of
+branches. Branch prediction and advanced decoder implementation work
+together to keep the instruction pipeline full. Subsequently, the
+out-of-order, speculative execution engine can take advantage of the
+processor's six execution units to execute instructions in parallel. And
+finally, it commits the results of executed instructions in original
+program order to maintain data integrity and program coherency.

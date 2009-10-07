@@ -1,0 +1,35 @@
+Dynamicxxx     real-time     
+    to   and  
+and to    out--order instruction execution. The
+out--order execution      
+and execute se  in  order that optimizes  use 
+ 's multiple execution units, while maintaining  
+integrity. This out--order execution keeps  execution units busy
+even when cache misses and   among  occur.
+Speculative execution refers to  's ability to execute
+ that lie beyond a conditional branch that has not yet been
+resolved, and ultimately to commit  results in  order  
+original instruction stream. To make speculative execution possible, 
+P6  micro-architecture decouples  dispatch and execution 
+ from  commitment  results. The 's
+out--order execution  uses -  to execute all
+available  in  instruction pool and store  results in
+temporary s.  The retirement unit n linearly searches 
+instruction pool  completed  that no longer have 
+ with or  or unresolved branch predictions.
+When completed  are found,  retirement unit commits 
+results  se  to memory and/or  IA-32 s (
+'s eight general-purpose s and eight x87 FPU 
+s) in  order y were originally issued and retires 
+ from  instruction pool.  Combining branch prediction,
+dynamic -  and speculative execution,  dynamic
+execution capability   P6 micro-architecture removes  constraint
+ linear instruction sequencing between  traditional fetch and
+execute phases  instruction execution.  Thus,   
+continue to decode  even when re are multiple levels 
+branches. Branch prediction and advanced decoder implementation work
+toger to keep  instruction pipeline full. Subsequently, 
+out--order, speculative execution engine  take advantage  
+'s six execution units to execute  in parallel. And
+finally, it commits  results  executed  in original
+program order to maintain  integrity and program coherency.
